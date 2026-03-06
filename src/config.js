@@ -5,20 +5,20 @@ module.exports = {
   SERVER_ICON: IMAGE,
   EMBED_COLOR: 0xFF0000,
 
-  TICKET_CATEGORY_ID: '1476268683398742220',
+  TICKET_CATEGORY_ID: '1364328756906426551',
 
   TICKET_ROLES: {
-    support:     '1476270027505401949',
-    inspection:  '1476270062615924747',
-    rank:        '1476270005526986914',
-    report:      '1476270005526986914',
-    partnership: '1476270047789056015',
+    support:     '1456836224366149738',
+    inspection:  '1456836224366149738',
+    rank:        '1456836224366149738',
+    report:      '1456836224366149738',
+    partnership: '1456836224366149738',
   },
 
-  UPPER_ROLE: '1476270005526986914',
+  UPPER_ROLE: '1456836224366149738',
 
-  LOG_CHANNEL_ID:    '1479257952778191040',
-  RATING_CHANNEL_ID: '1476912806057218048',
+  LOG_CHANNEL_ID:    '1460322675108085962',
+  RATING_CHANNEL_ID: '1460322675108085962',
 
   TICKET_TYPES: [
     { id: 'support',     label: 'الدعم الفني',        description: 'للمشاكل التقنية والاستفسارات', emoji: '🔧' },
