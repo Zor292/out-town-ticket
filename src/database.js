@@ -1,13 +1,8 @@
-// ============================================================
-//   OUT TOWN - اوت تاون | Database (SQLite via better-sqlite3)
-// ============================================================
-
 const Database = require('better-sqlite3');
 const path = require('path');
 
 const db = new Database(path.join(__dirname, '..', 'outtown.db'));
 
-// ── Schema ───────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS tickets (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,7 +35,6 @@ db.exec(`
   );
 `);
 
-// ── Ticket Counter ────────────────────────────────────────────
 function getNextTicketNumber(guildId) {
   const row = db.prepare('SELECT count FROM ticket_counter WHERE guild_id = ?').get(guildId);
   const next = (row ? row.count : 0) + 1;
@@ -51,7 +45,6 @@ function getNextTicketNumber(guildId) {
   return next;
 }
 
-// ── Ticket CRUD ───────────────────────────────────────────────
 function createTicket({ channelId, guildId, openerId, type }) {
   const stmt = db.prepare(`
     INSERT INTO tickets (channel_id, guild_id, opener_id, type, status, created_at)
@@ -76,7 +69,6 @@ function setTicketAdmin(channelId, adminId) {
   db.prepare('UPDATE tickets SET admin_id = ? WHERE channel_id = ?').run(adminId, channelId);
 }
 
-// ── Rating CRUD ───────────────────────────────────────────────
 function hasRated(openerId, ticketId) {
   return !!db.prepare('SELECT id FROM ratings WHERE opener_id = ? AND ticket_id = ?').get(openerId, ticketId);
 }
