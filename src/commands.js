@@ -1,7 +1,3 @@
-// ============================================================
-//   OUT TOWN - اوت تاون | Slash Commands
-// ============================================================
-
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 const commands = [
