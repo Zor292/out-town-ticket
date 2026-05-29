@@ -98,7 +98,6 @@ function renderMessage(msg) {
 
   let inner = '';
 
-  // reply
   if (msg.reference?.messageId && msg.mentions.repliedUser) {
     const refAuthor = msg.mentions.repliedUser;
     inner += `<discord-reply slot="reply" edited="false" attachment="false"
@@ -110,12 +109,10 @@ function renderMessage(msg) {
     </discord-reply>`;
   }
 
-  // text content
   if (msg.content) {
     inner += escHtml(msg.content);
   }
 
-  // embeds
   for (const embed of msg.embeds) {
     const color = embed.hexColor || '#FF0000';
     let embedHtml = `<discord-embed slot="embeds" color="${escHtml(color)}"`;
@@ -150,7 +147,7 @@ function renderMessage(msg) {
     inner += embedHtml;
   }
 
-  // attachments
+
   for (const att of msg.attachments.values()) {
     if (att.contentType?.startsWith('image/')) {
       inner += `<discord-attachment slot="attachments" url="${escHtml(att.url)}" alt="${escHtml(att.name)}" width="${att.width||400}" height="${att.height||300}"></discord-attachment>`;
