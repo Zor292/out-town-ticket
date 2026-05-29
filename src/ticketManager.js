@@ -47,7 +47,6 @@ function formatCooldown(ms) {
   return `${m} دقيقة`;
 }
 
-// ─── Panel ──────────────────────────────────────────────────────────────────
 
 async function sendTicketPanel(channel) {
   const embed = new EmbedBuilder()
@@ -70,7 +69,6 @@ async function sendTicketPanel(channel) {
   await channel.send({ embeds: [embed], components: [new ActionRowBuilder().addComponents(menu)] });
 }
 
-// ─── Open Ticket ─────────────────────────────────────────────────────────────
 
 async function openTicket(interaction, ticketType) {
   const guild  = interaction.guild;
@@ -168,8 +166,6 @@ async function openTicket(interaction, ticketType) {
   await interaction.editReply({ content: `تم فتح تذكرتك: <#${ticketChannel.id}>` });
 }
 
-// ─── Manage Menu ─────────────────────────────────────────────────────────────
-
 async function handleManageMenu(interaction) {
   const ticket = db.getTicketByChannel(interaction.channel.id);
   if (!ticket) return interaction.reply({ content: 'هذه القناة ليست تذكرة.', ephemeral: true });
@@ -233,7 +229,6 @@ async function handleManageMenu(interaction) {
   }
 }
 
-// ─── Call Buttons ────────────────────────────────────────────────────────────
 
 async function handleCallUpper(interaction) {
   const rem = checkCooldown(interaction.user.id, interaction.channel.id, 'upper');
@@ -252,7 +247,6 @@ async function handleCallSupport(interaction) {
   await interaction.reply({ content: `<@&${adminRoleId}>` });
 }
 
-// ─── Lock ────────────────────────────────────────────────────────────────────
 
 async function handleLockButton(interaction) {
   const ticket = db.getTicketByChannel(interaction.channel.id);
@@ -292,7 +286,6 @@ async function handleLockConfirm(interaction) {
     .setFooter(footer())
     .setTimestamp();
 
-  // زر الحذف يظهر بعد الإغلاق
   const deleteRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId('ticket_delete').setLabel('حذف التكت').setStyle(ButtonStyle.Danger),
   );
@@ -314,8 +307,6 @@ async function handleLockConfirm(interaction) {
     description: `**القناة:** <#${interaction.channel.id}>\n**أُغلقت بواسطة:** <@${interaction.user.id}>\n**فاتح التذكرة:** <@${ticket.opener_id}>`,
   });
 }
-
-// ─── Claim ───────────────────────────────────────────────────────────────────
 
 async function handleClaimButton(interaction) {
   const ticket = db.getTicketByChannel(interaction.channel.id);
@@ -349,7 +340,6 @@ async function handleClaimButton(interaction) {
   });
 }
 
-// ─── Delete ──────────────────────────────────────────────────────────────────
 
 async function handleDeleteButton(interaction) {
   const ticket = db.getTicketByChannel(interaction.channel.id);
@@ -380,7 +370,6 @@ async function handleDeleteConfirm(interaction) {
 
   await interaction.update({ content: 'جاري إنشاء سجل التذكرة وحذف القناة...', embeds: [], components: [] });
 
-  // توليد الـ transcript
   try {
     const attachment   = await generateTranscript(interaction.channel, ticket, interaction.guild);
     const logChannel   = interaction.guild.channels.cache.get(config.LOG_CHANNEL_ID);
@@ -412,7 +401,6 @@ async function handleDeleteConfirm(interaction) {
   setTimeout(() => interaction.channel.delete().catch(() => {}), 3000);
 }
 
-// ─── Rating ──────────────────────────────────────────────────────────────────
 
 async function sendRatingEmbed(channel, ticket, admin, source, dmUser = null) {
   const embed = new EmbedBuilder()
@@ -495,7 +483,6 @@ async function handleRating(interaction) {
   }
 }
 
-// ─── Log ─────────────────────────────────────────────────────────────────────
 
 async function logAction(guild, { title, description }) {
   const ch = guild.channels.cache.get(config.LOG_CHANNEL_ID);
